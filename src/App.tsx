@@ -1,20 +1,29 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
+import { useCurrentUser } from "hooks/useCurrentUser";
+
+import Login from "./pages/Login";
 
 if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
 }
 
 function App() {
+  const { currentUser, logout } = useCurrentUser();
+
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
-      </Router>
-    </div>
+    <>
+      <button onClick={logout}>LOGOUT</button>
+      {currentUser ? (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
+          </Switch>
+        </Router>
+      ) : (
+        <Login />
+      )}
+    </>
   );
 }
 
