@@ -9,9 +9,8 @@ export const useCurrentUser = () => {
     removeCurrentUser,
   ] = useLocalStorage<Token>("user");
 
-  const login = (jwt: string) => {
-    console.log(jwt);
-    setCurrentUser({ name: "test", accessToken: "TEST TOKEN" });
+  const login = (token: string) => {
+    setCurrentUser({ accessToken: token });
   };
 
   const logout = () => {

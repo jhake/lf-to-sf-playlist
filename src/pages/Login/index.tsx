@@ -6,19 +6,19 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const history = useHistory();
-  const { jwt } = useUrlQuery() as { jwt: string };
+  const { token } = useUrlQuery() as { token: string };
   const { login } = useCurrentUser();
 
   useEffect(() => {
-    if (!jwt) {
+    if (!token) {
       toast.error("Login failed!");
       history.push("/");
     } else {
-      login(jwt);
+      login(token);
       toast.success("Successfully logged in!");
       history.push("/");
     }
-  }, [jwt, login, history]);
+  }, [token, login, history]);
 
   return <></>;
 };
