@@ -2,6 +2,7 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { useUrlQuery } from "hooks/useUrlQuery";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const history = useHistory();
@@ -10,11 +11,13 @@ const Login = () => {
 
   useEffect(() => {
     if (!jwt) {
+      toast.error("Login failed!");
       history.push("/");
-      return;
+    } else {
+      login(jwt);
+      toast.success("Successfully logged in!");
+      history.push("/");
     }
-    login(jwt);
-    history.push("/");
   }, [jwt, login, history]);
 
   return <></>;
