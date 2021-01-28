@@ -13,14 +13,9 @@ export const useCurrentUser = () => {
     removeCurrentUser,
   ] = useLocalStorage<Token>("user");
 
-  const login = () => {
-    return axios.post(API_LOGIN_URL).then((response) => {
-      if (response.data.accessToken) {
-        setCurrentUser(response.data);
-      }
-
-      return response.data;
-    });
+  const login = (jwt: string) => {
+    console.log(jwt);
+    setCurrentUser({ name: "test", accessToken: "TEST TOKEN" });
   };
 
   const test = () => {

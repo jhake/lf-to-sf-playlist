@@ -1,22 +1,23 @@
 import { useCurrentUser } from "hooks/useCurrentUser";
+import { useUrlQuery } from "hooks/useUrlQuery";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const { currentUser, login, test } = useCurrentUser();
+  const history = useHistory();
+  const { jwt } = useUrlQuery() as { jwt: string };
+  const { login } = useCurrentUser();
 
-  const handleLogin = async () => {
-    try {
-      test();
-    } catch (error) {
-      alert(error);
+  useEffect(() => {
+    if (!jwt) {
+      history.push("/");
+      return;
     }
-  };
+    login(jwt);
+    history.push("/");
+  }, [jwt, login, history]);
 
-  return (
-    <div className="Login">
-      {currentUser}
-      <button onClick={handleLogin}>Login with Spotify</button>
-    </div>
-  );
+  return <></>;
 };
 
 export default Login;

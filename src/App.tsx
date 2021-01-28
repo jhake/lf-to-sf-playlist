@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 import { useCurrentUser } from "hooks/useCurrentUser";
 
@@ -8,22 +13,32 @@ if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
 }
 
+const API_LOGIN_URL = process.env.REACT_APP_BACKEND_API_URL + "auth/spotify";
+
 function App() {
   const { currentUser, logout } = useCurrentUser();
-
   return (
-    <>
-      <button onClick={logout}>LOGOUT</button>
-      {currentUser ? (
-        <Router>
-          <Switch>
+    <Router>
+      <Switch>
+        {!currentUser ? (
+          <>
+            <Route
+              exact
+              path="/"
+              component={() => <a href={API_LOGIN_URL}>Login with Spotify</a>}
+            />
+            <Route exact path="/login" component={Login} />
+            <Redirect to="/" />
+          </>
+        ) : (
+          <>
+            <button onClick={logout}>LOGOUT</button>
             <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
-          </Switch>
-        </Router>
-      ) : (
-        <Login />
-      )}
-    </>
+            <Route exact path="/login" component={Login} />
+          </>
+        )}
+      </Switch>
+    </Router>
   );
 }
 
