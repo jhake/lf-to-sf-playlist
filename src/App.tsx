@@ -4,13 +4,14 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useCurrentUser } from "hooks/useCurrentUser";
 
-import Login from "./pages/Login";
-import axios from "axios";
+import Navbar from "components/Navbar";
+import Login from "pages/Login";
+import SpotifyStats from "pages/SpotifyStats";
 
 if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
@@ -23,19 +24,6 @@ function App() {
   return (
     <>
       <Router>
-        <button
-          onClick={async () => {
-            let axiosResult = await axios.post(
-              process.env.REACT_APP_BACKEND_API_URL + "top_tracks",
-              {
-                headers: authHeader,
-              }
-            );
-            console.log(axiosResult);
-          }}
-        >
-          TEST
-        </button>
         <Switch>
           {!currentUser ? (
             <>
@@ -49,15 +37,9 @@ function App() {
             </>
           ) : (
             <>
-              <button
-                onClick={() => {
-                  logout();
-                  toast.success("Logged out!");
-                }}
-              >
-                LOGOUT
-              </button>
+              <Navbar />
               <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
+              <Route exact path="/spotify-stats" component={SpotifyStats} />
             </>
           )}
         </Switch>
