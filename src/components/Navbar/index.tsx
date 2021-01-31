@@ -11,6 +11,7 @@ const Navbar = () => {
       {currentUser ? (
         <>
           <Link to="/spotify-stats">Spotify Stats</Link>
+          <Link to="/lastfm-stats">Lastfm Stats</Link>
           <button
             onClick={() => {
               logout();
