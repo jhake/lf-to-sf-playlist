@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useCurrentUser } from "./useCurrentUser";
 
-export const useAxiosGet = <T>(url: string) => {
+export const useAxiosGet = <T>(url: string, timeout: number = 10000) => {
   const { authHeader } = useCurrentUser();
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ export const useAxiosGet = <T>(url: string) => {
       try {
         let axiosResult = await axios.get(url, {
           headers: authHeader,
-          timeout: 10000,
+          timeout: timeout,
         });
 
         setData(axiosResult.data);
