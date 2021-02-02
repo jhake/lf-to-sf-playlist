@@ -4,15 +4,15 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useCurrentUser } from "hooks/useCurrentUser";
 
 import Navbar from "components/Navbar";
-import Login from "pages/Login";
 import SpotifyStats from "pages/SpotifyStats";
 import LastfmStats from "pages/LastfmStats";
+import { useEffect } from "react";
 
 if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
@@ -22,6 +22,9 @@ const API_LOGIN_URL = process.env.REACT_APP_BACKEND_API_URL + "auth/spotify";
 
 function App() {
   const { currentUser } = useCurrentUser();
+  useEffect(() => {
+    if (currentUser) toast.success("Successfully logged in!");
+  }, [currentUser]);
   return (
     <>
       <Router>
@@ -33,7 +36,6 @@ function App() {
                 path="/"
                 component={() => <a href={API_LOGIN_URL}>Login with Spotify</a>}
               />
-              <Route exact path="/login" component={Login} />
               <Redirect to="/" />
             </>
           ) : (
