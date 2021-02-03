@@ -11,6 +11,7 @@ const SpotifyTracks = ({ spotifyTrackIds }: Props) => {
         return (
           <iframe
             key={spotifyTrackId}
+            title="Spotify Embed"
             src={`https://open.spotify.com/embed/track/${spotifyTrackId}`}
             width={300}
             height={380}
