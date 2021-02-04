@@ -35,7 +35,10 @@ const LastfmStats = () => {
       url += `${param}=${(lfParams as any)[param]}&`;
     }
     try {
-      let axiosResult = await axios.get(url);
+      let axiosResult = await axios.get(url, {
+        headers: authHeader,
+        timeout: 2000,
+      });
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
