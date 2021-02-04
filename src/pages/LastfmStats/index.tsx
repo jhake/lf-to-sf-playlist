@@ -37,7 +37,7 @@ const LastfmStats = () => {
     try {
       let axiosResult = await axios.get(url, {
         headers: authHeader,
-        timeout: 2000,
+        timeout: 10000,
       });
       setLfResult(axiosResult.data);
       setLoadCount(0);
