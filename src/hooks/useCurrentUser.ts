@@ -1,15 +1,25 @@
-import { useCookies } from "react-cookie";
+import { useLocalStorage } from "@rehooks/local-storage";
 
-const cookieName = "token";
+import { Token } from "types";
 
 export const useCurrentUser = () => {
-  const [cookies, , removeCookie] = useCookies([cookieName]);
+  const [
+    currentUser,
+    setCurrentUser,
+    removeCurrentUser,
+  ] = useLocalStorage<Token>("user");
 
-  const currentUser = cookies[cookieName];
-
-  const logout = () => {
-    removeCookie(cookieName);
+  const login = (token: string) => {
+    setCurrentUser({ accessToken: token });
   };
 
-  return { currentUser, logout };
+  const logout = () => {
+    removeCurrentUser();
+  };
+
+  const authHeader = currentUser?.accessToken
+    ? { Authorization: "Bearer " + currentUser.accessToken }
+    : {};
+
+  return { currentUser, login, logout, authHeader };
 };

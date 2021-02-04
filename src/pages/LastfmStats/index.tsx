@@ -10,7 +10,7 @@ import { LfParams, LfMethod, LfPeriod } from "types";
 import LastfmInput from "./LastfmInput";
 
 const LastfmStats = () => {
-  const { logout } = useCurrentUser();
+  const { authHeader } = useCurrentUser();
   const [lfParams, setLfParams] = useState<LfParams>({
     method: LfMethod.topTracks,
     user: "",
@@ -35,15 +35,16 @@ const LastfmStats = () => {
       url += `${param}=${(lfParams as any)[param]}&`;
     }
     try {
-      let axiosResult = await axios.get(url, { withCredentials: true });
+      let axiosResult = await axios.get(url);
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
+
+      console.log(axiosResult);
+      if (axiosResult.status !== 200) throw Error("Create playlist error");
     } catch (error) {
-      if (error.response?.status === 401) {
-        toast.error("Please login again");
-        logout();
-      } else toast.error("An error occured when loading the lf tracks");
+      console.log(error);
+      toast.error("An error occured when loading the lf tracks");
     }
   };
 
@@ -64,17 +65,15 @@ const LastfmStats = () => {
     setSfLoading(true);
     try {
       let result = await axios.get<Array<any>>(url, {
+        headers: authHeader,
         timeout: 50000,
         params: { queries },
-        withCredentials: true,
       });
       setSfResult([...sfResult, ...result.data]);
       setLoadCount(loadCount + 10);
     } catch (error) {
-      if (error.response?.status === 401) {
-        toast.error("Please login again");
-        logout();
-      } else toast.error(error.message);
+      console.log(error);
+      toast.error("An error occured when loading the spotify tracks");
     }
     setSfLoading(false);
   };
