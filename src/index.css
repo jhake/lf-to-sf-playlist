@@ -6,6 +6,27 @@ body {
   color: #fff;
 }
 
+body::-webkit-scrollbar {
+  width: 16px;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #888;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background: #555;
+}
+
+body::-webkit-scrollbar-track {
+  background: #141414;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

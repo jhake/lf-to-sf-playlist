@@ -5,7 +5,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useCurrentUser } from "hooks/useCurrentUser";
@@ -55,7 +55,11 @@ function App() {
               </Main>
             </>
           )}
-          <ToastContainer position="bottom-center" hideProgressBar />
+          <ToastContainer
+            position="bottom-center"
+            hideProgressBar
+            transition={Slide}
+          />
         </AppContainer>
       </Router>
     </>
@@ -74,8 +78,6 @@ const Main = styled.div`
   right: 0;
   padding: 32px;
   background: #141414;
-
-  overflow: auto;
 
   & .loader {
     width: 100%;
