@@ -34,7 +34,6 @@ const Navbar = () => {
           <button
             onClick={() => {
               handleLogout();
-              toast.success("Logged out");
             }}
           >
             Logout

@@ -13,6 +13,7 @@ import Navbar from "components/Navbar";
 import Login from "pages/Login";
 import SpotifyStats from "pages/SpotifyStats";
 import LastfmStats from "pages/LastfmStats";
+import Home from "pages/Home";
 
 if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
@@ -39,7 +40,7 @@ function App() {
           ) : (
             <>
               <Navbar />
-              <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
+              <Route exact path="/" component={Home} />
               <Route exact path="/spotify-stats" component={SpotifyStats} />
               <Route exact path="/lastfm-stats" component={LastfmStats} />
             </>

@@ -31,7 +31,6 @@ const LastfmStats = () => {
   const handleSearch = async () => {
     let url = process.env.REACT_APP_BACKEND_API_URL + "lf_get_request?";
     for (const param in lfParams) {
-      console.log((lfParams as any)[param]);
       url += `${param}=${(lfParams as any)[param]}&`;
     }
     try {
@@ -53,7 +52,6 @@ const LastfmStats = () => {
     }
   };
 
-  console.log({ loadCount });
   const handleLoad = async () => {
     let url = process.env.REACT_APP_BACKEND_API_URL + "search_spotify_tracks?";
 
@@ -66,7 +64,6 @@ const LastfmStats = () => {
       });
 
     // let queries = ["now or never april", "Now or Never April"];
-    console.log(queries);
     setSfLoading(true);
     try {
       let result = await axios.get<Array<any>>(url, {

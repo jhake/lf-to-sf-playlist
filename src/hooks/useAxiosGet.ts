@@ -16,7 +16,6 @@ export const useAxiosGet = <T>(url: string, timeout: number = 10000) => {
           headers: authHeader,
           timeout: timeout,
         });
-
         setData(axiosResult.data);
         setLoading(false);
       } catch (error) {
