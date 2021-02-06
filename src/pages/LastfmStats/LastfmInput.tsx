@@ -82,6 +82,7 @@ const LastfmInput = ({ lfParams, setLfParams }: Props) => {
       </InputGroup>
       <SelectGroup>
         <StyledSelect
+          isSearchable={false}
           options={lfMethodOptions}
           placeholder="method"
           onChange={handleMethodChange}
@@ -92,6 +93,7 @@ const LastfmInput = ({ lfParams, setLfParams }: Props) => {
         />
         {lfParams.method === LfMethod.topTracks ? (
           <StyledSelect
+            isSearchable={false}
             options={lfPeriodOptions}
             placeholder="period"
             onChange={handlePeriodChange}
