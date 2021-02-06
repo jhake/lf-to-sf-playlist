@@ -27,7 +27,7 @@ const Home = () => {
         } else toast.error(error.message);
       }
     })();
-  }, []);
+  });
 
   return <>{<h1>Hi {userInfo?.name}</h1>}</>;
 };
