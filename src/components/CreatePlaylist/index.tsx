@@ -21,7 +21,7 @@ const CreatePlaylist = (
     };
 
     try {
-      let axiosResult = await axios.post(url, body, {
+      axios.post(url, body, {
         headers: authHeader,
         timeout: 2000,
       });
