@@ -5,6 +5,7 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 import CreatePlaylist from "components/CreatePlaylist";
 import Loader from "icons/Loader";
 import { useState } from "react";
+import SpotifyInput from "./SpotifyInput";
 
 const SpotifyStats = () => {
   const { limit, offset, time_range } = useUrlQuery();
@@ -22,6 +23,9 @@ const SpotifyStats = () => {
   return (
     <>
       <h2>Spotify Stats</h2>
+      <br />
+      <SpotifyInput />
+
       {loading ? (
         <Loader />
       ) : (

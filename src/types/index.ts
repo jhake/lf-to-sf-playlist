@@ -32,3 +32,9 @@ export enum LfPeriod {
   half = "6month",
   year = "12month",
 }
+
+export enum SfRange {
+  fourWeek = "short_term",
+  sixWeek = "medium_term",
+  overall = "long_term",
+}
