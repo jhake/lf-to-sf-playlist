@@ -87,6 +87,13 @@ const SpotifyTrackContainer = styled.div`
   margin-right: 20px;
   margin-bottom: 20px;
 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   img {
     width: 100%;
     margin-bottom: 4px;
