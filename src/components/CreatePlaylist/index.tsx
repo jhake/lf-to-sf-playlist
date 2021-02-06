@@ -34,7 +34,11 @@ const CreatePlaylist = (
     }
   };
 
-  return <Button onClick={handleClick}>Create Playlist</Button>;
+  return spotifyTrackIds.length > 0 ? (
+    <Button onClick={handleClick}>Create Playlist</Button>
+  ) : (
+    <></>
+  );
 };
 
 export default CreatePlaylist;

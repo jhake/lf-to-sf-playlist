@@ -4,9 +4,11 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 
 import CreatePlaylist from "components/CreatePlaylist";
 import Loader from "icons/Loader";
+import { useState } from "react";
 
 const SpotifyStats = () => {
   const { limit, offset, time_range } = useUrlQuery();
+  const [unselectedTracks, setUnselectedTracks] = useState<Array<number>>([]);
 
   const url =
     process.env.REACT_APP_BACKEND_API_URL +
@@ -26,11 +28,19 @@ const SpotifyStats = () => {
         <>
           <br />
           <CreatePlaylist
-            spotifyTrackIds={data?.map((d) => d?.id as string) ?? []}
+            spotifyTrackIds={
+              data
+                ?.map((d) => d?.id as string)
+                .filter((_, i) => !unselectedTracks.includes(i)) ?? []
+            }
           />
           <br />
           <br />
-          <SpotifyTracks spotifyTrackIds={data?.map((d) => d.id) ?? []} />
+          <SpotifyTracks
+            tracks={data ?? []}
+            unselectedTracks={unselectedTracks}
+            setUnselectedTracks={setUnselectedTracks}
+          />
         </>
       )}
       {error && "errors occured"}

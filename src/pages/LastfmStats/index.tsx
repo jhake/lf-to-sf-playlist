@@ -25,6 +25,7 @@ const LastfmStats = () => {
   const [sfLoading, setSfLoading] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
   const [toLoadFirst, setToLoadFirst] = useState(false);
+  const [unselectedTracks, setUnselectedTracks] = useState<Array<number>>([]);
 
   const lfTracks =
     (lfParams?.method === LfMethod.topTracks
@@ -32,6 +33,10 @@ const LastfmStats = () => {
       : lfResult?.weeklytrackchart?.track) ?? [];
 
   const handleSearch = async () => {
+    if (lfParams.user === "") {
+      toast.info("Please include the LastFM username");
+      return;
+    }
     let url = process.env.REACT_APP_BACKEND_API_URL + "lf_get_request?";
     for (const param in lfParams) {
       console.log((lfParams as any)[param]);
@@ -99,12 +104,18 @@ const LastfmStats = () => {
       <Button onClick={handleSearch}>LastFM Search</Button>
       {"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"}
       <CreatePlaylist
-        spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
+        spotifyTrackIds={
+          sfResult
+            ?.map((d) => d?.id as string)
+            .filter((_, i) => !unselectedTracks.includes(i)) ?? []
+        }
       />
       <br />
       <br />
       <SpotifyTracks
-        spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
+        tracks={sfResult ?? []}
+        unselectedTracks={unselectedTracks}
+        setUnselectedTracks={setUnselectedTracks}
       />
       <br />
       {sfLoading ? (
