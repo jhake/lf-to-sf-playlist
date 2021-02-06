@@ -2,6 +2,9 @@ import SpotifyTracks from "components/SpotifyTracks";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import { useUrlQuery } from "hooks/useUrlQuery";
 
+import CreatePlaylist from "components/CreatePlaylist";
+import Loader from "icons/Loader";
+
 const SpotifyStats = () => {
   const { limit, offset, time_range } = useUrlQuery();
 
@@ -16,11 +19,19 @@ const SpotifyStats = () => {
 
   return (
     <>
-      <h1>Spotify Stats</h1>
+      <h2>Spotify Stats</h2>
       {loading ? (
-        "loading"
+        <Loader />
       ) : (
-        <SpotifyTracks spotifyTrackIds={data?.map((d) => d.id) ?? []} />
+        <>
+          <br />
+          <CreatePlaylist
+            spotifyTrackIds={data?.map((d) => d?.id as string) ?? []}
+          />
+          <br />
+          <br />
+          <SpotifyTracks spotifyTrackIds={data?.map((d) => d.id) ?? []} />
+        </>
       )}
       {error && "errors occured"}
     </>

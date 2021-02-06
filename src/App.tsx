@@ -4,6 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,7 +26,7 @@ function App() {
   return (
     <>
       <Router>
-        <Switch>
+        <AppContainer>
           {!currentUser ? (
             <>
               <Route
@@ -39,17 +40,53 @@ function App() {
           ) : (
             <>
               <Navbar />
-              <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
-              <Route exact path="/spotify-stats" component={SpotifyStats} />
-              <Route exact path="/lastfm-stats" component={LastfmStats} />
+              <Main>
+                <Switch>
+                  <>
+                    <Route exact path="/" component={() => <h1>HOMEPAGE</h1>} />
+                    <Route
+                      exact
+                      path="/spotify-stats"
+                      component={SpotifyStats}
+                    />
+                    <Route exact path="/lastfm-stats" component={LastfmStats} />
+                  </>
+                </Switch>
+              </Main>
             </>
           )}
-        </Switch>
+          <ToastContainer position="bottom-center" hideProgressBar />
+        </AppContainer>
       </Router>
-
-      <ToastContainer />
     </>
   );
 }
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+`;
+
+const Main = styled.div`
+  width: calc(100vw - 240px);
+  position: relative;
+  right: 0;
+  padding: 32px;
+  background: #141414;
+
+  overflow: auto;
+
+  & .loader {
+    width: 100%;
+    height: 100px;
+  }
+
+  h2 {
+    width: 100%;
+    font-size: 32px;
+    font-weight: 800;
+  }
+`;
 
 export default App;

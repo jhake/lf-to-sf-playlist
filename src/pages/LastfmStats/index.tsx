@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import SpotifyTracks from "components/SpotifyTracks";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import CreatePlaylist from "components/CreatePlaylist";
+import Button from "components/Button";
 import { LfParams, LfMethod, LfPeriod } from "types";
 
+import Loader from "icons/Loader";
 import LastfmInput from "./LastfmInput";
 
 const LastfmStats = () => {
@@ -15,13 +17,14 @@ const LastfmStats = () => {
     method: LfMethod.topTracks,
     user: "",
     period: LfPeriod.overall,
-    limit: 100,
+    limit: undefined,
     page: 1,
   });
   const [lfResult, setLfResult] = useState<any>();
   const [sfResult, setSfResult] = useState<Array<any>>([]);
   const [sfLoading, setSfLoading] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
+  const [toLoadFirst, setToLoadFirst] = useState(false);
 
   const lfTracks =
     (lfParams?.method === LfMethod.topTracks
@@ -42,9 +45,8 @@ const LastfmStats = () => {
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
-
+      setToLoadFirst(true);
       console.log(axiosResult);
-      if (axiosResult.status !== 200) throw Error("Create playlist error");
     } catch (error) {
       console.log(error);
       toast.error("An error occured when loading the lf tracks");
@@ -81,23 +83,36 @@ const LastfmStats = () => {
     setSfLoading(false);
   };
 
+  useEffect(() => {
+    if (toLoadFirst) {
+      handleLoad();
+      setToLoadFirst(false);
+    }
+  }, [toLoadFirst]);
+
   return (
     <>
-      <h1>LastFM stats</h1>
-      <button onClick={handleSearch}>LastFM Search</button>
+      <h2>LastFM stats</h2>
       <LastfmInput lfParams={lfParams} setLfParams={setLfParams} />
+      <br />
+      <Button onClick={handleSearch}>LastFM Search</Button>
+      {"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"}
       <CreatePlaylist
         spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
       />
+      <br />
       <br />
       <SpotifyTracks
         spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
       />
       <br />
       {sfLoading ? (
-        "Loading"
+        <Loader />
       ) : loadCount < lfTracks.length ? (
-        <button onClick={handleLoad}>Load more</button>
+        <>
+          <br />
+          <Button onClick={handleLoad}>Load more</Button>
+        </>
       ) : (
         ""
       )}

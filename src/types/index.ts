@@ -1,5 +1,12 @@
+import { Moment } from "moment-timezone";
+
 export interface Token {
   accessToken: string;
+}
+
+export interface DateRange {
+  startDate: Moment | null;
+  endDate: Moment | null;
 }
 
 export interface LfParams {
