@@ -88,6 +88,7 @@ const LastfmStats = () => {
       handleLoad();
       setToLoadFirst(false);
     }
+    // eslint-disable-next-line
   }, [toLoadFirst]);
 
   return (
