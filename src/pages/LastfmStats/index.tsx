@@ -10,7 +10,7 @@ import { LfParams, LfMethod, LfPeriod } from "types";
 import LastfmInput from "./LastfmInput";
 
 const LastfmStats = () => {
-  const { authHeader } = useCurrentUser();
+  const { logout, authHeader } = useCurrentUser();
   const [lfParams, setLfParams] = useState<LfParams>({
     method: LfMethod.topTracks,
     user: "",
@@ -42,12 +42,14 @@ const LastfmStats = () => {
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
-
-      console.log(axiosResult);
-      if (axiosResult.status !== 200) throw Error("Create playlist error");
     } catch (error) {
-      console.log(error);
-      toast.error("An error occured when loading the lf tracks");
+      if (error.response?.status === 401) {
+        toast.error("Please login again");
+        logout();
+      } else {
+        console.log(error);
+        toast.error("An error occured when loading the lf tracks");
+      }
     }
   };
 
@@ -75,8 +77,13 @@ const LastfmStats = () => {
       setSfResult([...sfResult, ...result.data]);
       setLoadCount(loadCount + 10);
     } catch (error) {
-      console.log(error);
-      toast.error("An error occured when loading the spotify tracks");
+      if (error.response?.status === 401) {
+        toast.error("Please login again");
+        logout();
+      } else {
+        console.log(error);
+        toast.error("An error occured when loading the spotify tracks");
+      }
     }
     setSfLoading(false);
   };

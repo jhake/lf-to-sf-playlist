@@ -9,7 +9,7 @@ interface Props {
 const CreatePlaylist = (
   { spotifyTrackIds }: Props = { spotifyTrackIds: [] }
 ) => {
-  const { authHeader } = useCurrentUser();
+  const { logout, authHeader } = useCurrentUser();
 
   const handleClick = async () => {
     const url = process.env.REACT_APP_BACKEND_API_URL + "create_playlist";
@@ -25,11 +25,12 @@ const CreatePlaylist = (
         headers: authHeader,
         timeout: 2000,
       });
-      console.log(axiosResult);
-      if (axiosResult.status !== 200) throw Error("Create playlist error");
       toast.success("Playlist created!");
     } catch (error) {
-      toast.error(error);
+      if (error.response?.status === 401) {
+        toast.error("Please login again.");
+        logout();
+      } else toast.error(error.message);
     }
   };
 
