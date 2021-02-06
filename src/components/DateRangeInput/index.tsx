@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  DateRangePicker,
-  DateRangePickerShape,
-  FocusedInputShape,
-} from "react-dates";
+import { DateRangePicker, FocusedInputShape } from "react-dates";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import "react-dates/initialize";
