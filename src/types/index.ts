@@ -1,7 +1,8 @@
 import { Moment } from "moment-timezone";
 
-export interface Token {
+export interface User {
   accessToken: string;
+  info: any;
 }
 
 export interface DateRange {

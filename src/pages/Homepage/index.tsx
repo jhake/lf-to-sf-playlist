@@ -1,13 +1,14 @@
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 const Homepage = () => {
   const history = useHistory();
-
+  const { currentUser } = useCurrentUser();
   return (
     <HomepageContainer>
       <h2>
-        Good afternoon, <strong>Jeon HeeJin!</strong>
+        Good afternoon, <strong>{currentUser?.info.name}</strong>
       </h2>
       <br />
       <h3>Create Playlists Now</h3>

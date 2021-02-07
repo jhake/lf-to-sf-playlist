@@ -22,7 +22,7 @@ const CreatePlaylist = (
     };
 
     try {
-      axios.post(url, body, {
+      await axios.post(url, body, {
         headers: authHeader,
         timeout: 2000,
       });

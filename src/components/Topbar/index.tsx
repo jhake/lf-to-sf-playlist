@@ -3,15 +3,30 @@ import { toast } from "react-toastify";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import DropdownArrow from "icons/DropdownArrow";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 const Topbar = () => {
-  const { logout } = useCurrentUser();
+  const { currentUser, logout, authHeader } = useCurrentUser();
+  console.log(currentUser?.info);
   const profileRef = useRef(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    toast.success("Successfully logged out");
+  const API_LOGOUT_URL = process.env.REACT_APP_BACKEND_API_URL + "logout";
+
+  const handleLogout = async () => {
+    try {
+      await axios.delete(API_LOGOUT_URL, {
+        timeout: 2000,
+        headers: authHeader,
+      });
+      logout();
+      toast.success("Logged out successfully.");
+    } catch (error) {
+      if (error.response?.status === 401) {
+        toast.error("Please login again");
+        logout();
+      } else toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -30,11 +45,8 @@ const Topbar = () => {
         ref={profileRef}
         id="profile"
       >
-        <img
-          src="https://yt3.ggpht.com/yti/ANoDKi7309ul7NrwancfkYcHeonnFVLa9Oifk-gtP0JsIA=s108-c-k-c0x00ffffff-no-rj"
-          alt="profile"
-        />
-        <p>Jeon HeeJin</p>
+        <img src={currentUser?.info?.profile_image} alt="profile" />
+        <p>{currentUser?.info?.name}</p>
 
         <DropdownArrow />
         <Dropdown className={dropdownOpen ? "active" : ""}>
