@@ -1,5 +1,4 @@
 import { useLocalStorage } from "@rehooks/local-storage";
-import { useState } from "react";
 import { toast } from "react-toastify";
 import { User } from "types";
 import axios from "axios";

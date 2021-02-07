@@ -83,9 +83,12 @@ const Profile = styled.div`
   }
 
   img {
-    border-radius: 50%;
     margin-right: 8px;
     height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-position: 50% 50%;
+    background-size: cover;
   }
 
   p {
