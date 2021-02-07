@@ -8,7 +8,7 @@ const Homepage = () => {
   return (
     <HomepageContainer>
       <h2>
-        {generateGreeting()}, <strong>{currentUser?.info.name}</strong>
+        {generateGreeting()}, {currentUser?.info.name}
       </h2>
       <br />
       <h3>Create Playlists Now</h3>
@@ -42,11 +42,11 @@ const generateGreeting = () => {
   let date = new Date();
   let hour = date.getHours();
   if (hour < 12) {
-    greeting = "Good Morning";
+    greeting = "Good morning";
   } else if (hour < 17) {
-    greeting = "Good Afternoon";
+    greeting = "Good afternoon";
   } else {
-    greeting = "Good Evening";
+    greeting = "Good evening";
   }
   return greeting;
 };
