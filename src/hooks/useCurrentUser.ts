@@ -17,7 +17,7 @@ export const useCurrentUser = () => {
     (async () => {
       try {
         const axiosResult = await axios.get(API_USER_INFO_URL, {
-          timeout: 2000,
+          timeout: 5000,
           headers: { Authorization: "Bearer " + token },
         });
         setCurrentUser({ accessToken: token, info: axiosResult.data });

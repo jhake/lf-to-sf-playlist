@@ -4,7 +4,7 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 
 import CreatePlaylist from "components/CreatePlaylist";
 import Loader from "icons/Loader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SpotifyInput from "./SpotifyInput";
 
 const SpotifyStats = () => {
@@ -19,6 +19,10 @@ const SpotifyStats = () => {
     (time_range ? `time_range=${time_range}&` : "");
 
   const { data, loading, error } = useAxiosGet<any[]>(url);
+
+  useEffect(() => {
+    setUnselectedTracks([]);
+  }, [data]);
 
   return (
     <>

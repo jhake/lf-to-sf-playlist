@@ -8,7 +8,7 @@ const Homepage = () => {
   return (
     <HomepageContainer>
       <h2>
-        Good afternoon, <strong>{currentUser?.info.name}</strong>
+        {generateGreeting()}, <strong>{currentUser?.info.name}</strong>
       </h2>
       <br />
       <h3>Create Playlists Now</h3>
@@ -37,12 +37,28 @@ const Homepage = () => {
   );
 };
 
+const generateGreeting = () => {
+  let greeting = "";
+  let date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+  if (hour < 12) {
+    greeting = "Good Morning";
+  } else if (hour < 17) {
+    greeting = "Good Afternoon";
+  } else {
+    greeting = "Good Evening";
+  }
+  return greeting;
+};
+
 const BigButton = styled.div`
   background: #222;
   border-radius: 8px;
-  padding: 16px;
+  padding: 24px;
   width: 300px;
-  height: 200px;
+  height: 240px;
   margin-right: 16px;
   margin-bottom: 16px;
   cursor: pointer;
@@ -55,7 +71,8 @@ const BigButton = styled.div`
 
   p {
     font-size: 16px;
-    width: 80%;
+    line-height: 24px;
+    width: 90%;
   }
 
   &:hover {

@@ -12,7 +12,7 @@ const DropdownArrow = ({ className, rotated }: Props) => {
       height="16"
       width="16"
       viewBox="0 0 16 16"
-      style={rotated ? { transform: " rotate(180deg); " } : {}}
+      style={rotated ? { transform: "rotate(180deg)" } : {}}
     >
       <path d="M3 6l5 5.794L13 6z" fill="#FFFFFF"></path>
     </svg>

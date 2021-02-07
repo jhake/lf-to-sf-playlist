@@ -16,6 +16,7 @@ import SpotifyStats from "pages/SpotifyStats";
 import LastfmStats from "pages/LastfmStats";
 import Topbar from "components/Topbar";
 import Homepage from "pages/Homepage";
+import MyPlaylists from "pages/MyPlaylists";
 
 if (!process.env.REACT_APP_BACKEND_API_URL) {
   throw new Error("REACT_APP_BACKEND_API_URL not defined.");
@@ -53,6 +54,7 @@ function App() {
                       component={SpotifyStats}
                     />
                     <Route exact path="/lastfm-stats" component={LastfmStats} />
+                    <Route exact path="/playlists" component={MyPlaylists} />
                   </>
                 </Switch>
               </Main>

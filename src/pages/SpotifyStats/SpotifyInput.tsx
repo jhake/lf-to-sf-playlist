@@ -93,7 +93,7 @@ const SpotifyInputContainer = styled.div`
 
 const selectTheme = (theme: any) => ({
   ...theme,
-  borderRadius: 0,
+  borderRadius: 4,
   colors: {
     ...theme.colors,
     neutral0: "black",

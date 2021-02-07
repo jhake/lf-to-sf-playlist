@@ -72,7 +72,7 @@ const SpotifyTrack = ({
     >
       <img src={track?.album?.images[0]?.url} alt={`${track?.name} art`} />
       <h3>{track?.name}</h3>
-      <p>{track?.artists[0]?.name}</p>
+      <p>{track?.artists?.map((artist: any) => artist.name).join(", ")}</p>
     </SpotifyTrackContainer>
   );
 };

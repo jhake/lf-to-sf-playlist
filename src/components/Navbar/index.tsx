@@ -17,17 +17,21 @@ const Navbar = () => {
           <h1>LastFM to Spotify Playlist</h1>
         </LogoContainer>
         <NavItem to="/" exact>
-          <HomeIcon /> Home
+          <HomeIcon /> <h3>Home</h3>
         </NavItem>
         {currentUser ? (
           <>
             <CategoryTitle>Create Playlists</CategoryTitle>
             <NavItem to="/spotify-stats">
               <SpotifyIcon />
-              Spotify Stats
+              <h3>Spotify Stats</h3>
             </NavItem>
             <NavItem to="/lastfm-stats">
-              <LastfmIcon /> Lastfm Stats
+              <LastfmIcon /> <h3>Lastfm Stats</h3>
+            </NavItem>
+            <hr />
+            <NavItem to="/playlists">
+              <h3>My Playlists</h3>
             </NavItem>
           </>
         ) : (
@@ -56,6 +60,13 @@ const NavBarInner = styled.div`
   flex-direction: column;
 
   background: #000;
+
+  hr {
+    margin: 8px 0;
+    border-width: 0.5px;
+    border-color: #333;
+    border-top: none;
+  }
 `;
 
 const CategoryTitle = styled.h4`
@@ -75,25 +86,29 @@ const NavItem = styled(NavLink)`
   align-items: center;
 
   border-radius: 4px;
-
-  font-size: 14px;
-  font-weight: 700;
-  color: #b3b3b3;
   text-decoration: none;
+
+  h3 {
+    margin-left: 16px;
+    color: #b3b3b3;
+    font-size: 14px;
+    font-weight: 700;
+    &:hover {
+      color: #fff;
+    }
+  }
 
   & .icon {
     height: 22px;
     width: 22px;
-    margin: 0 16px;
-  }
-
-  &:hover {
-    color: #fff;
+    margin-left: 16px;
   }
 
   &.active {
     background: #333;
-    color: #fff;
+    h3 {
+      color: #fff;
+    }
   }
 `;
 
