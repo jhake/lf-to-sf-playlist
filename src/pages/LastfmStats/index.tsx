@@ -49,6 +49,7 @@ const LastfmStats = () => {
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
+      setUnselectedTracks([]);
       setToLoadFirst(true);
       console.log(axiosResult);
     } catch (error) {
@@ -108,7 +109,9 @@ const LastfmStats = () => {
       <h2>LastFM stats</h2>
       <LastfmInput lfParams={lfParams} setLfParams={setLfParams} />
       <br />
-      <Button onClick={handleSearch}>LastFM Search</Button>
+      <Button onClick={handleSearch} disabled={sfLoading}>
+        LastFM Search
+      </Button>
       {"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"}
       <CreatePlaylist
         spotifyTrackIds={

@@ -16,7 +16,7 @@ const Topbar = () => {
   const handleLogout = async () => {
     try {
       await axios.delete(API_LOGOUT_URL, {
-        timeout: 2000,
+        timeout: 5000,
         headers: authHeader,
       });
       logout();
@@ -48,7 +48,7 @@ const Topbar = () => {
         <img src={currentUser?.info?.profile_image} alt="profile" />
         <p>{currentUser?.info?.name}</p>
 
-        <DropdownArrow />
+        <DropdownArrow rotated={dropdownOpen} />
         <Dropdown className={dropdownOpen ? "active" : ""}>
           <button onClick={handleLogout}>Log out</button>
         </Dropdown>

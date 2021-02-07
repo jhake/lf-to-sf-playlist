@@ -21,6 +21,12 @@ const Button = styled.button`
     background: #1db95499;
     transform: scale(0.95) perspective(1px);
   }
+
+  &:disabled {
+    color: #999;
+    transform: unset;
+    background: #1db95433;
+  }
 `;
 
 export default Button;

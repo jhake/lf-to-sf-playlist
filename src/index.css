@@ -32,6 +32,7 @@ body::-webkit-scrollbar-track {
   padding: 0;
   margin: 0;
   font-family: "Raleway", sans-serif;
+  transition: background 0.1s linear, transform 0.03s linear;
 }
 
 code {
