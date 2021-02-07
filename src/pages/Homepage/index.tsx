@@ -41,8 +41,6 @@ const generateGreeting = () => {
   let greeting = "";
   let date = new Date();
   let hour = date.getHours();
-  let minute = date.getMinutes();
-  let second = date.getSeconds();
   if (hour < 12) {
     greeting = "Good Morning";
   } else if (hour < 17) {
