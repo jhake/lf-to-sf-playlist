@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useCurrentUser } from "hooks/useCurrentUser";
+import Button from "components/Button";
 
 interface Props {
   spotifyTrackIds: Array<string>;
@@ -34,7 +35,11 @@ const CreatePlaylist = (
     }
   };
 
-  return <button onClick={handleClick}>Create Playlist</button>;
+  return spotifyTrackIds.length > 0 ? (
+    <Button onClick={handleClick}>Create Playlist</Button>
+  ) : (
+    <></>
+  );
 };
 
 export default CreatePlaylist;

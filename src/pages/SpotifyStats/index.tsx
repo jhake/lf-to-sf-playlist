@@ -2,8 +2,14 @@ import SpotifyTracks from "components/SpotifyTracks";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import { useUrlQuery } from "hooks/useUrlQuery";
 
+import CreatePlaylist from "components/CreatePlaylist";
+import Loader from "icons/Loader";
+import { useState } from "react";
+import SpotifyInput from "./SpotifyInput";
+
 const SpotifyStats = () => {
   const { limit, offset, time_range } = useUrlQuery();
+  const [unselectedTracks, setUnselectedTracks] = useState<Array<number>>([]);
 
   const url =
     process.env.REACT_APP_BACKEND_API_URL +
@@ -16,11 +22,30 @@ const SpotifyStats = () => {
 
   return (
     <>
-      <h1>Spotify Stats</h1>
+      <h2>Spotify Stats</h2>
+      <br />
+      <SpotifyInput />
+
       {loading ? (
-        "loading"
+        <Loader />
       ) : (
-        <SpotifyTracks spotifyTrackIds={data?.map((d) => d.id) ?? []} />
+        <>
+          <br />
+          <CreatePlaylist
+            spotifyTrackIds={
+              data
+                ?.map((d) => d?.id as string)
+                .filter((_, i) => !unselectedTracks.includes(i)) ?? []
+            }
+          />
+          <br />
+          <br />
+          <SpotifyTracks
+            tracks={data ?? []}
+            unselectedTracks={unselectedTracks}
+            setUnselectedTracks={setUnselectedTracks}
+          />
+        </>
       )}
       {error && "errors occured"}
     </>

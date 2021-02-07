@@ -1,13 +1,12 @@
+import styled from "styled-components";
 import Select from "react-select";
-import { useState, Dispatch, SetStateAction } from "react";
-import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import { Dispatch, SetStateAction } from "react";
+import { DateRange, LfParams, LfMethod, LfPeriod } from "types";
 
-import { LfParams, LfMethod, LfPeriod } from "types";
+import DateRangeInput from "components/DateRangeInput";
 
 export const lfMethodOptions = [
-  { label: "Top Tracks", value: LfMethod.topTracks },
+  { label: "Recent Top Tracks", value: LfMethod.topTracks },
   { label: "Specific Time Period", value: LfMethod.weeklyTrackChart },
 ];
 
@@ -26,11 +25,6 @@ interface Props {
 }
 
 const LastfmInput = ({ lfParams, setLfParams }: Props) => {
-  const [dateRange, setDateRange] = useState<{
-    startDate: Date;
-    endDate: Date;
-  }>({ startDate: new Date(), endDate: new Date() });
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newParams = { ...lfParams };
     if (e.target.id === "user") {
@@ -53,58 +47,133 @@ const LastfmInput = ({ lfParams, setLfParams }: Props) => {
     setLfParams(newParams);
   };
 
-  const handleRangeChange = (ranges: any) => {
-    setDateRange(ranges.range1);
-
+  const handleRangeChange = (value: DateRange) => {
+    console.log({ value });
     let newParams = { ...lfParams };
-    newParams["from"] = Math.floor(ranges.range1.startDate / 1000);
-    newParams["to"] = Math.floor(ranges.range1.endDate / 1000);
+    newParams["from"] = value?.startDate
+      ? Math.floor(value.startDate.unix())
+      : undefined;
+    newParams["to"] = value?.endDate
+      ? Math.floor(value.endDate.unix())
+      : undefined;
+
     setLfParams(newParams);
   };
 
   return (
-    <>
-      <Select
-        options={lfMethodOptions}
-        placeholder="method"
-        onChange={handleMethodChange}
-        value={lfMethodOptions.find((option) => {
-          return option.value === lfParams.method;
-        })}
-      />
-      {lfParams.method === LfMethod.topTracks ? (
-        <Select
-          options={lfPeriodOptions}
-          placeholder="period"
-          onChange={handlePeriodChange}
-          value={lfPeriodOptions.find((option) => {
-            return option.value === lfParams.period;
+    <LastfmInputContainer>
+      <InputGroup>
+        <StyledInput
+          id="user"
+          type="text"
+          placeholder="LastFM username"
+          onChange={handleInputChange}
+          value={lfParams.user}
+          autoComplete="off"
+        />
+        <StyledInput
+          id="limit"
+          type="number"
+          placeholder="Maximum tracks to load (default: 50)"
+          onChange={handleInputChange}
+          value={lfParams.limit}
+          autoComplete="off"
+        />
+      </InputGroup>
+      <SelectGroup>
+        <StyledSelect
+          isSearchable={false}
+          options={lfMethodOptions}
+          placeholder="method"
+          onChange={handleMethodChange}
+          theme={selectTheme}
+          value={lfMethodOptions.find((option) => {
+            return option.value === lfParams.method;
           })}
+        />
+        {lfParams.method === LfMethod.topTracks ? (
+          <StyledSelect
+            isSearchable={false}
+            options={lfPeriodOptions}
+            placeholder="period"
+            onChange={handlePeriodChange}
+            theme={selectTheme}
+            value={lfPeriodOptions.find((option) => {
+              return option.value === lfParams.period;
+            })}
+          />
+        ) : (
+          ""
+        )}
+      </SelectGroup>
+      {lfParams.method === LfMethod.weeklyTrackChart ? (
+        <DateRangeInput
+          handleChange={handleRangeChange}
+          dateRangeInitial={{ startDate: null, endDate: null }}
         />
       ) : (
         ""
       )}
-      {lfParams.method === LfMethod.weeklyTrackChart ? (
-        <DateRangePicker ranges={[dateRange]} onChange={handleRangeChange} />
-      ) : (
-        ""
-      )}
-      <input
-        id="user"
-        type="text"
-        placeholder="lastfm username"
-        onChange={handleInputChange}
-        value={lfParams.user}
-      />
-      <input
-        id="limit"
-        type="number"
-        placeholder="limit"
-        onChange={handleInputChange}
-        value={lfParams.limit}
-      />
-    </>
+    </LastfmInputContainer>
   );
 };
+
+const StyledSelect = styled(Select)``;
+
+const SelectGroup = styled("div")`
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+
+  ${StyledSelect} {
+    width: 48%;
+  }
+`;
+
+const StyledInput = styled.input`
+  width: 48%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #fff;
+  height: 38px;
+  outline: none;
+  color: #fff;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+const InputGroup = styled("div")`
+  display: flex;
+  width: 80%;
+  margin-bottom: 10px;
+  justify-content: space-between;
+
+  ${StyledInput}:focus {
+    border-bottom: 2px solid #1db954;
+  }
+`;
+
+const LastfmInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const selectTheme = (theme: any) => ({
+  ...theme,
+  borderRadius: 0,
+  colors: {
+    ...theme.colors,
+    neutral0: "black",
+    neutral80: "#eee",
+    neutral90: "#fff",
+    primary: "#1db954",
+    primary25: "#1db95466",
+    primary50: "#1db95499",
+  },
+});
 
 export default LastfmInput;

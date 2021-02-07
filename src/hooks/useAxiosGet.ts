@@ -11,6 +11,7 @@ export const useAxiosGet = <T>(url: string, timeout: number = 10000) => {
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         let axiosResult = await axios.get(url, {
           headers: authHeader,

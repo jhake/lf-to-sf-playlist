@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import SpotifyTracks from "components/SpotifyTracks";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import CreatePlaylist from "components/CreatePlaylist";
+import Button from "components/Button";
 import { LfParams, LfMethod, LfPeriod } from "types";
 
+import Loader from "icons/Loader";
 import LastfmInput from "./LastfmInput";
 
 const LastfmStats = () => {
@@ -15,13 +17,15 @@ const LastfmStats = () => {
     method: LfMethod.topTracks,
     user: "",
     period: LfPeriod.overall,
-    limit: 100,
+    limit: undefined,
     page: 1,
   });
   const [lfResult, setLfResult] = useState<any>();
   const [sfResult, setSfResult] = useState<Array<any>>([]);
   const [sfLoading, setSfLoading] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
+  const [toLoadFirst, setToLoadFirst] = useState(false);
+  const [unselectedTracks, setUnselectedTracks] = useState<Array<number>>([]);
 
   const lfTracks =
     (lfParams?.method === LfMethod.topTracks
@@ -29,6 +33,10 @@ const LastfmStats = () => {
       : lfResult?.weeklytrackchart?.track) ?? [];
 
   const handleSearch = async () => {
+    if (lfParams.user === "") {
+      toast.info("Please include the LastFM username");
+      return;
+    }
     let url = process.env.REACT_APP_BACKEND_API_URL + "lf_get_request?";
     for (const param in lfParams) {
       url += `${param}=${(lfParams as any)[param]}&`;
@@ -41,6 +49,8 @@ const LastfmStats = () => {
       setLfResult(axiosResult.data);
       setLoadCount(0);
       setSfResult([]);
+      setToLoadFirst(true);
+      console.log(axiosResult);
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Please login again");
@@ -85,23 +95,43 @@ const LastfmStats = () => {
     setSfLoading(false);
   };
 
+  useEffect(() => {
+    if (toLoadFirst) {
+      handleLoad();
+      setToLoadFirst(false);
+    }
+    // eslint-disable-next-line
+  }, [toLoadFirst]);
+
   return (
     <>
-      <h1>LastFM stats</h1>
-      <button onClick={handleSearch}>LastFM Search</button>
+      <h2>LastFM stats</h2>
       <LastfmInput lfParams={lfParams} setLfParams={setLfParams} />
+      <br />
+      <Button onClick={handleSearch}>LastFM Search</Button>
+      {"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"}
       <CreatePlaylist
-        spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
+        spotifyTrackIds={
+          sfResult
+            ?.map((d) => d?.id as string)
+            .filter((_, i) => !unselectedTracks.includes(i)) ?? []
+        }
       />
       <br />
+      <br />
       <SpotifyTracks
-        spotifyTrackIds={sfResult?.map((d) => d?.id as string) ?? []}
+        tracks={sfResult ?? []}
+        unselectedTracks={unselectedTracks}
+        setUnselectedTracks={setUnselectedTracks}
       />
       <br />
       {sfLoading ? (
-        "Loading"
+        <Loader />
       ) : loadCount < lfTracks.length ? (
-        <button onClick={handleLoad}>Load more</button>
+        <>
+          <br />
+          <Button onClick={handleLoad}>Load more</Button>
+        </>
       ) : (
         ""
       )}
