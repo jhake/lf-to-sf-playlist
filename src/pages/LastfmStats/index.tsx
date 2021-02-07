@@ -12,7 +12,7 @@ import Loader from "icons/Loader";
 import LastfmInput from "./LastfmInput";
 
 const LastfmStats = () => {
-  const { authHeader } = useCurrentUser();
+  const { logout, authHeader } = useCurrentUser();
   const [lfParams, setLfParams] = useState<LfParams>({
     method: LfMethod.topTracks,
     user: "",
@@ -39,7 +39,6 @@ const LastfmStats = () => {
     }
     let url = process.env.REACT_APP_BACKEND_API_URL + "lf_get_request?";
     for (const param in lfParams) {
-      console.log((lfParams as any)[param]);
       url += `${param}=${(lfParams as any)[param]}&`;
     }
     try {
@@ -53,12 +52,16 @@ const LastfmStats = () => {
       setToLoadFirst(true);
       console.log(axiosResult);
     } catch (error) {
-      console.log(error);
-      toast.error("An error occured when loading the lf tracks");
+      if (error.response?.status === 401) {
+        toast.error("Please login again");
+        logout();
+      } else {
+        console.log(error);
+        toast.error("An error occured when loading the lf tracks");
+      }
     }
   };
 
-  console.log({ loadCount });
   const handleLoad = async () => {
     let url = process.env.REACT_APP_BACKEND_API_URL + "search_spotify_tracks?";
 
@@ -71,7 +74,6 @@ const LastfmStats = () => {
       });
 
     // let queries = ["now or never april", "Now or Never April"];
-    console.log(queries);
     setSfLoading(true);
     try {
       let result = await axios.get<Array<any>>(url, {
@@ -82,8 +84,13 @@ const LastfmStats = () => {
       setSfResult([...sfResult, ...result.data]);
       setLoadCount(loadCount + 10);
     } catch (error) {
-      console.log(error);
-      toast.error("An error occured when loading the spotify tracks");
+      if (error.response?.status === 401) {
+        toast.error("Please login again");
+        logout();
+      } else {
+        console.log(error);
+        toast.error("An error occured when loading the spotify tracks");
+      }
     }
     setSfLoading(false);
   };
