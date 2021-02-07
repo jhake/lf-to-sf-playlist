@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import LogoLong from "icons/LogoLong";
@@ -8,7 +7,7 @@ import SpotifyIcon from "icons/Spotify";
 import LastfmIcon from "icons/Lastfm";
 
 const Navbar = () => {
-  const { currentUser, logout } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   return (
     <NavbarContainer>
@@ -22,6 +21,7 @@ const Navbar = () => {
         </NavItem>
         {currentUser ? (
           <>
+            <CategoryTitle>Create Playlists</CategoryTitle>
             <NavItem to="/spotify-stats">
               <SpotifyIcon />
               Spotify Stats
@@ -29,14 +29,6 @@ const Navbar = () => {
             <NavItem to="/lastfm-stats">
               <LastfmIcon /> Lastfm Stats
             </NavItem>
-            <button
-              onClick={() => {
-                logout();
-                toast.success("Logged out");
-              }}
-            >
-              Logout
-            </button>
           </>
         ) : (
           ""
@@ -64,11 +56,16 @@ const NavBarInner = styled.div`
   flex-direction: column;
 
   background: #000;
+`;
 
-  button {
-    position: fixed;
-    bottom: 5px;
-  }
+const CategoryTitle = styled.h4`
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  padding: 16px;
+  margin-top: 8px;
+  margin-bottom: -8px;
 `;
 
 const NavItem = styled(NavLink)`
@@ -77,7 +74,7 @@ const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
 
-  border-radius: 8px;
+  border-radius: 4px;
 
   font-size: 14px;
   font-weight: 700;
