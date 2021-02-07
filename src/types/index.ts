@@ -1,5 +1,12 @@
+import { Moment } from "moment-timezone";
+
 export interface Token {
   accessToken: string;
+}
+
+export interface DateRange {
+  startDate: Moment | null;
+  endDate: Moment | null;
 }
 
 export interface LfParams {
@@ -24,4 +31,10 @@ export enum LfPeriod {
   quarter = "3month",
   half = "6month",
   year = "12month",
+}
+
+export enum SfRange {
+  fourWeek = "short_term",
+  sixWeek = "medium_term",
+  overall = "long_term",
 }
