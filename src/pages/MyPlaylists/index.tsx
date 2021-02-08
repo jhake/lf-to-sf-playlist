@@ -35,9 +35,6 @@ const MyPlaylists = () => {
     }
   }
 
-  console.log({ playlists });
-  console.log({ playlistEntries });
-  console.log({ playlistsCreatedByApp, playlistsOthers });
   return (
     <MyPlaylistsContainer>
       <h2>My Playlists</h2>
@@ -95,7 +92,9 @@ const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
       if (error.response?.status === 401) {
         toast.error("Please login again.");
         logout();
-      } else toast.error(error.message);
+      } else {
+        toast.error(error.response?.data);
+      }
     }
   };
 
