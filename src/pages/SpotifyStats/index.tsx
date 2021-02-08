@@ -6,6 +6,7 @@ import CreatePlaylist from "components/CreatePlaylist";
 import Loader from "icons/Loader";
 import { useEffect, useState } from "react";
 import SpotifyInput from "./SpotifyInput";
+import { SfRange } from "types";
 
 const SpotifyStats = () => {
   const { limit, offset, time_range } = useUrlQuery();
@@ -14,9 +15,11 @@ const SpotifyStats = () => {
   const url =
     process.env.REACT_APP_BACKEND_API_URL +
     "top_tracks?" +
-    (limit ? `limit=${limit}&` : "") +
+    (limit ? `limit=${limit}&` : `limit=${25}&`) +
     (offset ? `offset=${offset}&` : "") +
-    (time_range ? `time_range=${time_range}&` : "");
+    (time_range
+      ? `time_range=${time_range}&`
+      : `time_range=${SfRange.fourWeek}&`);
 
   const { data, loading, error } = useAxiosGet<any[]>(url);
 

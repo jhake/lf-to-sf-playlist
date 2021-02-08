@@ -9,7 +9,7 @@ import { useHistory, useLocation } from "react-router-dom";
 export const sfRangeOptions = [
   { label: "Overall", value: SfRange.overall },
   { label: "Last 4 Weeks", value: SfRange.fourWeek },
-  { label: "Last 6 Weeks", value: SfRange.sixWeek },
+  { label: "Last 6 Months", value: SfRange.sixMonth },
 ];
 
 export const sfLimitOptions = [
@@ -23,7 +23,6 @@ const SpotifyInput = () => {
   const history = useHistory();
   const location = useLocation();
 
-  console.log(location);
   const handleLimitChange = ({ value }: any) => {
     history.push(
       location.pathname +
@@ -52,7 +51,7 @@ const SpotifyInput = () => {
         <StyledSelect
           isSearchable={false}
           options={sfRangeOptions}
-          placeholder="Time range"
+          placeholder="Time range (default 4 weeks)"
           onChange={handleRangeChange}
           theme={selectTheme}
           value={sfRangeOptions.find((option) => {
@@ -62,7 +61,7 @@ const SpotifyInput = () => {
         <StyledSelect
           isSearchable={false}
           options={sfLimitOptions}
-          placeholder="Number of tracks to load (default: 10)"
+          placeholder="Number of tracks to load (default: 25)"
           onChange={handleLimitChange}
           theme={selectTheme}
           value={sfRangeOptions.find((option) => {
