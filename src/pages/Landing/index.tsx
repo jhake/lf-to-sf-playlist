@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "components/Button";
 import LogoLong from "icons/LogoLong";
-import { NavLink } from "react-router-dom";
+import bg from "assets/bg.svg";
 
 const Landing = () => {
   const API_LOGIN_URL = process.env.REACT_APP_BACKEND_API_URL + "auth/spotify";
@@ -9,19 +9,25 @@ const Landing = () => {
   return (
     <>
       <LandingContainer>
-        <TopbarContainer>
-          <Link to="/">
-            <LogoLong></LogoLong>
-          </Link>
-          <NavLinks>
-            <Link to="/">How To Use</Link>
-            <Link to="/">About us</Link>
-          </NavLinks>
-        </TopbarContainer>
+        <TopBar>
+          <TopbarContainer>
+            <Link href="/">
+              <h2>LastFM to Spotify Playlist</h2>
+            </Link>
+            <NavLinks>
+              <Link href="/">How To Use</Link>
+              <Link href={API_LOGIN_URL}>Log in</Link>
+            </NavLinks>
+          </TopbarContainer>
+        </TopBar>
         <Main>
           <LogoContainer>
             <LogoLong />
-            <h1>LastFM to Spotify Playlist</h1>
+            <h1>
+              LastFM to
+              <br />
+              Spotify Playlist
+            </h1>
             <p>Create customized playlist based on your listening history.</p>
           </LogoContainer>
 
@@ -42,7 +48,7 @@ const Footer = styled.div`
 `;
 
 const LandingContainer = styled.div`
-  background-color: #141414;
+  background-color: #2d46b9;
   display: flex;
   width: 100%;
   align-items: center;
@@ -51,28 +57,52 @@ const LandingContainer = styled.div`
 `;
 
 const Main = styled.div`
+  width: 100%;
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  margin-top: -80px;
+  background: url(${bg});
+  background-size: 175%;
+  background-position: 46% 4%;
 
-  ${Button} a {
-    text-decoration: none;
-    color: #fff;
+  ${Button} {
+    background: #1ed760;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #2d46b9;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    &:hover {
+      transform: none;
+      background: #fff;
+    }
   }
 `;
 
-const TopbarContainer = styled.div`
+const TopBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   position: sticky;
   top: 0;
-  height: 60px;
+  height: 80px;
   background: #000;
+`;
+
+const TopbarContainer = styled.div`
+  max-width: 1300px;
+  width: 80%;
   display: flex;
   align-items: center;
-  padding: 0 200px;
   & .logo {
     width: 90px;
     height: 70px;
@@ -80,7 +110,7 @@ const TopbarContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Link = styled(NavLink)`
+const Link = styled.a`
   text-decoration: none;
   color: #fff;
   font-weight: 700;
@@ -88,18 +118,18 @@ const Link = styled(NavLink)`
 
 const NavLinks = styled.div`
   display: flex;
-  ${Link} {
+  a {
     margin: 0 5px;
     padding: 10px;
+    border-radius: 5px;
     &:hover {
-      background: #555;
-      border-radius: 5px;
+      color: #1ed760;
     }
   }
 `;
 
 const LogoContainer = styled.div`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -109,16 +139,36 @@ const LogoContainer = styled.div`
 
   h1 {
     text-align: center;
-    font-size: 60px;
-    font-weight: 600;
-    color: #fff;
+    color: #1ed760;
+    font-weight: 800;
+    font-size: 120px;
     padding-bottom: 20px;
+  }
+
+  p {
+    color: #1ed760;
+    font-size: 20px;
+    font-weight: 600;
   }
 
   & .logo {
     width: 400px;
     height: 120px;
     margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 1400px) {
+    h1 {
+      font-weight: 800;
+      font-size: 80px;
+      padding-bottom: 20px;
+    }
+
+    & .logo {
+      width: 300px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
   }
 `;
 
