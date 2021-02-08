@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "components/Button";
 import LogoLong from "icons/LogoLong";
 import bg from "assets/bg.svg";
 

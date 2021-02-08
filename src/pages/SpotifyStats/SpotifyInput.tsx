@@ -23,7 +23,6 @@ const SpotifyInput = () => {
   const history = useHistory();
   const location = useLocation();
 
-  console.log(location);
   const handleLimitChange = ({ value }: any) => {
     history.push(
       location.pathname +
