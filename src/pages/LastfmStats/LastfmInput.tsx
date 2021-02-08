@@ -107,10 +107,13 @@ const LastfmInput = ({ lfParams, setLfParams }: Props) => {
         )}
       </SelectGroup>
       {lfParams.method === LfMethod.weeklyTrackChart ? (
-        <DateRangeInput
-          handleChange={handleRangeChange}
-          dateRangeInitial={{ startDate: null, endDate: null }}
-        />
+        <>
+          <br />
+          <DateRangeInput
+            handleChange={handleRangeChange}
+            dateRangeInitial={{ startDate: null, endDate: null }}
+          />
+        </>
       ) : (
         ""
       )}
