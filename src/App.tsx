@@ -70,6 +70,16 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100vh;
+
+  .Toastify__toast--info {
+    background: #3498db;
+  }
+  .Toastify__toast--success {
+    background: #1db954;
+  }
+  .Toastify__toast--error {
+    background: #990000;
+  }
 `;
 
 const Main = styled.div`
