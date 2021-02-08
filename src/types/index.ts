@@ -36,6 +36,6 @@ export enum LfPeriod {
 
 export enum SfRange {
   fourWeek = "short_term",
-  sixWeek = "medium_term",
+  sixMonth = "medium_term",
   overall = "long_term",
 }
