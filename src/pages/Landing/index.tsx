@@ -31,9 +31,7 @@ const Landing = () => {
             <p>Create customized playlist based on your listening history.</p>
           </LogoContainer>
 
-          <Button>
-            <a href={API_LOGIN_URL}>Login with Spotify</a>
-          </Button>
+          <a href={API_LOGIN_URL}>Login with Spotify</a>
         </Main>
         <Footer></Footer>
       </LandingContainer>
@@ -68,18 +66,16 @@ const Main = styled.div`
   background-size: 175%;
   background-position: 46% 4%;
 
-  ${Button} {
+  a {
+    padding: 16px 40px;
+    border-radius: 200px;
     background: #1ed760;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    a {
-      text-transform: uppercase;
-      text-decoration: none;
-      color: #2d46b9;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #2d46b9;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
     &:hover {
       transform: none;
       background: #fff;
