@@ -70,7 +70,14 @@ const SpotifyTrack = ({
       onClick={toggleSelect}
       className={unselected ? "unselected" : "'"}
     >
-      <img src={track?.album?.images[0]?.url} alt={`${track?.name} art`} />
+      <Art
+        style={{
+          background: `url(${track?.album?.images[0]?.url})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      />
       <h3>{track?.name}</h3>
       <p>{track?.artists?.map((artist: any) => artist.name).join(", ")}</p>
     </SpotifyTrackContainer>
@@ -94,19 +101,24 @@ const SpotifyTrackContainer = styled.div`
   -ms-user-select: none;
   user-select: none;
 
-  img {
-    width: 100%;
-    margin-bottom: 4px;
-  }
-
   h3 {
     font-weight: 800;
     margin-bottom: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
 
   p {
     font-weight: 200;
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   &.unselected {
@@ -116,6 +128,33 @@ const SpotifyTrackContainer = styled.div`
 
   &:hover {
     background: #ffffff22;
+  }
+`;
+
+const Art = styled.div`
+  margin-bottom: 8px;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+
+    outline: none;
+    border: none;
+    background-color: #1db954;
+
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.1s linear;
   }
 `;
 

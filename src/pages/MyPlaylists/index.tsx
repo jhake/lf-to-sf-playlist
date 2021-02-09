@@ -100,8 +100,7 @@ const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
 
   return (
     <SpotifyPlaylistContainer onClick={handleClick}>
-      <div
-        className="art"
+      <Art
         style={{
           background: `url(${playlist?.images[0]?.url})`,
           backgroundSize: "cover",
@@ -112,7 +111,7 @@ const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
         <button>
           <Play />
         </button>
-      </div>
+      </Art>
       <h3>{playlist?.name}</h3>
       <p>
         {playlist?.description === ""
@@ -129,6 +128,33 @@ const MyPlaylistsContainer = styled.div`
   }
   h3 {
     margin-bottom: 16px;
+  }
+`;
+
+const Art = styled.div`
+  margin-bottom: 8px;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+
+    outline: none;
+    border: none;
+    background-color: #1db954;
+
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.1s linear;
   }
 `;
 
@@ -149,31 +175,7 @@ const SpotifyPlaylistContainer = styled.div`
   -ms-user-select: none;
   user-select: none;
 
-  .art {
-    margin-bottom: 8px;
-    width: 168px;
-    height: 168px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 10px;
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-
-      outline: none;
-      border: none;
-      background-color: #1db954;
-
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
-      transition: opacity 0.1s linear;
-    }
+ 
   }
 
   &:hover {
