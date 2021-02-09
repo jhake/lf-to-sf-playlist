@@ -35,9 +35,7 @@ const SpotifyTracks = ({
   const handleMouseOver = () => {
     if (!helpShown) {
       setHelpShown(true);
-      toast.info(
-        "Click on the tracks to not include them from the playlist that will be created"
-      );
+      toast.info("Click to deselect a track", { toastId: "click hint" });
     }
   };
 

@@ -34,7 +34,9 @@ const LastfmStats = () => {
 
   const handleSearch = async () => {
     if (lfParams.user === "") {
-      toast.info("Please include the LastFM username");
+      toast.info("Please include the LastFM username", {
+        toastId: "include username",
+      });
       return;
     }
     let url = process.env.REACT_APP_BACKEND_API_URL + "lf_get_request?";

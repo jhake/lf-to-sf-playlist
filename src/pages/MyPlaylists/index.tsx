@@ -93,7 +93,9 @@ const SpotifyPlaylist = ({ playlist }: { playlist: any }) => {
         toast.error("Please login again.");
         logout();
       } else {
-        toast.error(error.response?.data);
+        toast.error(error.response?.data, {
+          toastId: "play playlist error",
+        });
       }
     }
   };

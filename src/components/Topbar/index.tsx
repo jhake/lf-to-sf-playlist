@@ -20,6 +20,7 @@ const Topbar = () => {
         headers: authHeader,
       });
       logout();
+      toast.dismiss();
       toast.success("Logged out successfully.");
     } catch (error) {
       if (error.response?.status === 401) {
