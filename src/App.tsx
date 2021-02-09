@@ -50,6 +50,7 @@ function App() {
                     />
                     <Route exact path="/lastfm-stats" component={LastfmStats} />
                     <Route exact path="/playlists" component={MyPlaylists} />
+                    <Redirect to="/" />
                   </>
                 </Switch>
               </Main>
