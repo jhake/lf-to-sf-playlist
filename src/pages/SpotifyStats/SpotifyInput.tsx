@@ -77,7 +77,8 @@ const StyledSelect = styled(Select)``;
 
 const SelectGroup = styled("div")`
   display: flex;
-  width: 80%;
+  width: 100%;
+  max-width: 800px;
   justify-content: space-between;
 
   ${StyledSelect} {

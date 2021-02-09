@@ -125,7 +125,8 @@ const StyledSelect = styled(Select)``;
 
 const SelectGroup = styled("div")`
   display: flex;
-  width: 80%;
+  width: 100%;
+  max-width: 800px;
   justify-content: space-between;
 
   ${StyledSelect} {
@@ -151,7 +152,8 @@ const StyledInput = styled.input`
 
 const InputGroup = styled("div")`
   display: flex;
-  width: 80%;
+  width: 100%;
+  max-width: 800px;
   margin-bottom: 10px;
   justify-content: space-between;
 
