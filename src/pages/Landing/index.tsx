@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import LogoLong from "icons/LogoLong";
 import bg from "assets/bg.svg";
+import Footer from "components/Footer";
 
 const Landing = () => {
   const API_LOGIN_URL = process.env.REACT_APP_BACKEND_API_URL + "auth/spotify";
@@ -32,17 +33,11 @@ const Landing = () => {
 
           <a href={API_LOGIN_URL}>Login with Spotify</a>
         </Main>
-        <Footer></Footer>
+        <Footer />
       </LandingContainer>
     </>
   );
 };
-
-const Footer = styled.div`
-  height: 300px;
-  width: 100%;
-  background-color: #000;
-`;
 
 const LandingContainer = styled.div`
   background-color: #2d46b9;
