@@ -8,7 +8,7 @@ const Homepage = () => {
   return (
     <HomepageContainer>
       <h2>
-        {generateGreeting()}, {currentUser?.info?.name}
+        {generateGreeting()}, {currentUser?.info?.name?.split(" ")[0]}
       </h2>
       <br />
       <h3>Create Playlists Now</h3>
